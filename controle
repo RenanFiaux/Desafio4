@@ -1,0 +1,340 @@
+const  express = require ( 'express' ) ;
+const  cors = require ( 'cors' ) ;
+
+const  models = require ( './models' ) ;
+
+const  app = express ( ) ;
+app . use ( cors ( ) ) ;
+app . usar ( express . json ( ) ) ;
+
+deixe  cliente = modelos . Cliente ;
+deixe  servico = modelos . Serviço ;
+deixe  pedido = modelos . Pedido ;
+
+app . get ( '/' ,  função ( req , res ) {
+    res . enviar ( 'olá mundo' ) ;
+} ) ;
+
+app . post ( '/cliente' ,  assíncrono ( req , res ) => {
+    deixe  criar = aguarde  cliente . criar (
+        req . corpo
+    )
+    res . send ( 'Cliente foi inserido' ) ;
+} )
+
+app . post ( '/pedido' ,  assíncrono ( req , res ) => {
+    vamos  criar = aguardar  pedido . criar (
+        req . corpo
+    )
+    res . send ( 'Pedido foi inserido' ) ;
+} )
+
+app . post ( '/servicos' ,  assíncrono ( req , res ) => {
+
+    
+
+    função  aguardando ( ms ) {
+        return  nova  Promessa ( ( resolve ) => {
+            setTimeout ( determinação . ms ) ;
+        } )
+    }
+
+    aguardo  servico . criar (
+        req . corpo
+        
+    )
+    
+    res . enviar ( 'serviço foi inserido' ) ;
+    aguarde  aguardar ( 3000 ) ;
+} ) ;
+
+app . get ( '/listaservicos' ,  async ( req , res ) => {
+    aguardo  servico . findAll ( {
+        ordem : [ [ 'nome' ,  'DESC' ] ]
+    } ) . então ( função ( serviços ) {
+        res . json ( { serviços } )
+    } ) ;
+} ) ;
+
+app . get ( '/ofertas' ,  assíncrono ( req , res ) => {
+    aguardo  servico . contagem ( 'id' )
+    . então ( função ( serviços ) {
+        res . json ( servicos ) ;
+    } ) ;
+} ) ;
+
+app . get ( '/servico/:id' ,  assíncrono ( req , res ) => {
+    serviço . findByPk ( req . params . id )
+    . então ( servico => {
+        retornar  res . json ( {
+            erro : falso ,
+            serviço
+        } ) ;
+    } ) . pegar ( função ( erro ) {
+        retornar  res . status ( 400 ) . json ( {
+            erro : verdadeiro ,
+            mensagem : "Código não está cadastrado!"
+        } ) ;
+    } ) ;
+} ) ;
+
+//1 visualizar todos os clientes
+app . get ( '/listacliente' ,  async ( req , res ) => {
+    aguardo  cliente . findAll ( {
+        ordem : [ [ 'nome' , 'ASC' ] ]
+    } ) . então ( função ( clientes ) {
+        res . json ( { clientes } )
+    } ) ;
+
+} ) ;
+
+//2 visualize os clientes em ordem de antiguidade
+app . get ( '/ordenarclientes' ,  async ( req , res ) => {
+    aguardo  cliente . findAll ( {
+        ordem : [ [ 'id' , 'ASC' ] ]
+    } ) . então ( função ( clientes ) {
+        res . json ( { clientes } )
+    } ) ;
+
+} ) ;
+
+//3 visualize todos os pedidos
+app . get ( '/listapedidos' ,  async ( req , res ) => {
+    aguardar  pedido . findAll ( {
+        ordem : [ [ 'id' , 'ASC' ] ]
+    } ) . então ( função ( pedidos ) {
+        res . json ( { pedidos } )
+    } ) ;
+
+} ) ;
+
+//4 visualize o pedido por ordem a partir do maior valor
+app . get ( '/maiorvalor' ,  assíncrono ( req , res ) => {
+    aguardar  pedido . findAll ( {
+        ordem : [ [ 'valor' , 'DESC' ] ]
+    } ) . então ( função ( pedidos ) {
+        res . json ( { pedidos } )
+    } ) ;
+
+} ) ;
+
+//5 informe quantos clientes estão na nossa base de dados
+app . get ( '/qtdclientes' ,  assíncrono ( req , res ) => {
+    aguardo  cliente . contagem ( 'id' )
+    . então ( função ( clientes ) {
+        res . json ( clientes ) ;
+    } ) ;
+  
+} ) ;
+
+//6 informe a quantidade de pedidos solicitados
+app . get ( '/qtdpedidos' ,  async ( req , res ) => {
+    aguardar  pedido . contagem ( 'id' )
+    . então ( função ( pedidos ) {
+        res . json ( pedidos ) ;
+    } ) ;
+  
+} ) ;
+
+app . get ( '/atualizaservico' ,  assíncrono ( req , res ) => {
+    aguardo  servico . findByPk ( 1 )
+    . então ( servico => {
+        serviço . nome = 'HTML/CSS/JS' ;
+        serviço . descricao = 'Páginas estáticas e dinâmicas estilizadas' ;
+        serviço . salvar ( ) ;
+        retornar  res . json ( { servico } ) ;
+    } ) ;
+} ) ;
+
+app . put ( '/editarservico' ,  ( req , res ) => {
+    serviço . atualização ( req . corpo , {
+        onde : { id : req . corpo . identificação }
+    } ) . então ( função ( ) {
+        retornar  res . json ( {
+            erro : falso ,
+            mensagem : "Serviço foi alterado com sucesso"
+        } ) ;
+    } ) . pegar ( função ( erro ) {
+        retornar  res . status ( 400 ) . json ( {
+            erro : verdadeiro ,
+            mensagem : "Erro na alteração do serviço"
+        } ) ;
+    } ) ;
+} ) ;
+
+app . get ( '/servicospedidos' ,  async ( req , res ) => {
+    aguardo  servico . findByPk ( 1 ,  {
+        inclua : [ { todos : verdadeiro } ]
+    } ) . então ( servico => {
+        retornar  res . json ( { servico } ) ;
+    } )
+} )
+
+app . put ( '/editarpedido' ,  ( req , res ) => {
+    pedido . atualização ( req . corpo , {
+        onde : { ServicoId : req . corpo . ServicoId }
+    } ) . então ( função ( ) {
+        retornar  res . json ( {
+            erro : falso ,
+            message : "Pedido modificado com sucesso."
+        } )
+    } ) . pegar ( função ( erro ) {
+        retornar  res . status ( 400 ) . json ( {
+            erro : verdadeiro ,
+            message : "Não foi possível modificar o pedido."
+        } )
+    } )
+} )
+
+app . get ( '/excluircliente' ,  async ( req , res ) => {
+    cliente . destruir ( {
+        onde : { id : 1 }
+    } )
+
+} )
+
+app . delete ( '/apagarcliente/:id' ,  ( req , res ) => {
+    cliente . destruir ( {
+        onde : { id : req . parâmetros . identificação }
+    } ) . então ( função ( ) {
+        retornar  res . json ( {
+            erro : falso ,
+            mensagem : "Cliente foi excluido com sucesso"
+        } )
+    } ) . pegar ( função ( erro ) {
+        retornar  res . status ( 400 ) . json ( {
+            erro : verdadeiro ,
+            message : "Não foi possível excluir o cliente"
+        } )
+    } )
+} )
+
+app . delete ( '/apagarservico/:id' ,  ( req , res ) => {
+    serviço . destruir ( {
+        onde : { id : req . parâmetros . identificação }
+    } ) . então ( função ( ) {
+        retornar  res . json ( {
+            erro : falso ,
+            mensagem : "Serviço foi excluido com sucesso"
+        } )
+    } ) . pegar ( função ( erro ) {
+        retornar  res . status ( 400 ) . json ( {
+            erro : verdadeiro ,
+            message : "Não foi possível excluir o Serviço"
+        } )
+    } )
+} )
+
+app . get ( '/cliente/:id' ,  async ( req , res ) => {
+    cliente . findByPk ( req . params . id )
+    . então ( cliente => {
+        retornar  res . json ( {
+            erro : falso ,
+            cliente
+        } ) ;
+    } ) . pegar ( função ( erro ) {
+        retornar  res . status ( 400 ) . json ( {
+            erro : verdadeiro ,
+            mensagem : "Código não está cadastrado!"
+        } ) ;
+    } ) ;
+} ) ;
+
+app . post ( '/cadastrarcliente' ,  assíncrono ( req , res ) => {
+   
+
+    função  aguardando ( ms ) {
+        return  nova  Promessa ( ( resolve ) => {
+            setTimeout ( determinação . ms ) ;
+        } )
+    }
+
+    aguardo  cliente . criar (
+        req . corpo
+        
+    )
+    
+    res . send ( 'cliente foi inserido' ) ;
+    aguarde  aguardar ( 3000 ) ;
+} ) ;
+
+app . put ( '/editarcliente' ,  ( req , res ) => {
+    cliente . atualização ( req . corpo , {
+        onde : { id : req . corpo . identificação }
+    } ) . então ( função ( ) {
+        retornar  res . json ( {
+            erro : falso ,
+            mensagem : "cliente foi alterado com sucesso"
+        } ) ;
+    } ) . pegar ( função ( erro ) {
+        retornar  res . status ( 400 ) . json ( {
+            erro : verdadeiro ,
+            message : "Erro na alteração do cliente"
+        } ) ;
+    } ) ;
+} ) ;
+
+//Rotas Pedido para frente
+
+app . get ( '/pedido/:id' ,  async ( req , res ) => {
+    pedido . findByPk ( req . params . id ,   {
+        incluir : [ {
+            todos : verdade
+        } ]
+    } )
+    . então ( pedido => {
+        retornar  res . json ( {
+            erro : falso ,
+            pedido
+        } ) ;
+    } ) . pegar ( função ( erro ) {
+            retornar  res . status ( 400 ) . json ( {
+            erro : verdadeiro ,
+            mensagem : "Código não cadastrado!"
+        } ) ;
+    } ) ;
+} ) ;
+
+app . post ( '/cadastrarpedido' ,  assíncrono ( req , res ) => {
+   
+
+    função  aguardando ( ms ) {
+        return  nova  Promessa ( ( resolve ) => {
+            setTimeout ( determinação . ms ) ;
+        } )
+    }
+
+    aguardar  pedido . criar (
+        req . corpo
+        
+    )
+    
+    res . send ( 'Pedido foi inserido' ) ;
+    aguarde  aguardar ( 3000 ) ;
+} ) ;
+
+app . delete ( '/apagarpedido/:id' ,  ( req , res ) => {
+    pedido . destruir ( {
+        onde : { id : req . parâmetros . identificação }
+    } ) . então ( função ( ) {
+        retornar  res . json ( {
+            erro : falso ,
+            mensagem : "pedido foi excluido com sucesso"
+        } )
+    } ) . pegar ( função ( erro ) {
+        retornar  res . status ( 400 ) . json ( {
+            erro : verdadeiro ,
+            message : "Não foi possível excluir o pedido"
+        } )
+    } )
+} )
+
+
+
+
+
+deixe  porta = processo . env . PORTO  ||  3001 ;
+
+app . escutar ( porta , ( req , res ) => {
+    consola . log ( 'servidor ativo' ) ;
+} ) ;
