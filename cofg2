@@ -1,0 +1,23 @@
+{
+  "desenvolvimento" : {
+    "username" : " raiz " ,
+    "senha" : null ,
+    "banco de dados" : " módulo3 " ,
+    "host" : " 127.0.0.1 " ,
+    "dialeto" : " mysql "
+  },
+  "teste" : {
+    "username" : " raiz " ,
+    "senha" : null ,
+    "database" : " database_test " ,
+    "host" : " 127.0.0.1 " ,
+    "dialeto" : " mysql "
+  },
+  "produção" : {
+    "username" : " raiz " ,
+    "senha" : null ,
+    "database" : " database_production " ,
+    "host" : " 127.0.0.1 " ,
+    "dialeto" : " mysql "
+  }
+}
