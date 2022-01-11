@@ -1,0 +1,50 @@
+'usar estrito' ;
+módulo . exportações  =  {
+  up : async  ( queryInterface ,  Sequelize )  =>  {
+    aguarde  queryInterface . createTable ( 'Pedidos' ,  {
+      código : {
+        allowNull : false ,
+        autoIncrement : true ,
+        chave primária : true ,
+        tipo : Sequelizar . INTEIRO
+      } ,
+      ID do cliente : {
+        allowNull : false ,
+        tipo : Sequelizar . INTEIRO ,
+        referências : {
+          modelo : 'clientes' ,
+          chave : 'id'
+        } ,
+        onDelete : 'CASCADE' ,
+        onUpdate : 'CASCADE'
+      } ,
+      ServicoId : {
+        allowNull : false ,
+        tipo : Sequelizar . INTEIRO ,
+        referências : {
+          modelo : 'servicos' ,
+          chave : 'id'
+        } ,
+        onDelete : 'CASCADE' ,
+        onUpdate : 'CASCADE'
+      } ,
+      valor : {
+        tipo : Sequelizar . FLUTUAR ( 6 , 2 )
+      } ,
+      dados : {
+        tipo : Sequelizar . SOMENTE DATA
+      } ,
+      criadoEm : {
+        allowNull : false ,
+        tipo : Sequelizar . ENCONTRO
+      } ,
+      atualizadoEm : {
+        allowNull : false ,
+        tipo : Sequelizar . ENCONTRO
+      }
+    } ) ;
+  } ,
+  down : async  ( queryInterface ,  Sequelize )  =>  {
+    aguarde  queryInterface . dropTable ( 'Pedidos' ) ;
+  }
+} ;
